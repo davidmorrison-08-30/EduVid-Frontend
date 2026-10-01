@@ -25,3 +25,6 @@ dist-ssr
 
 # ECS Task Definition
 task-definition.json
+
+# .env
+.env
