@@ -10,7 +10,7 @@
       {
         "name": "$REPO_NAME",
         "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:latest",
-        "portMappings": [{ "containerPort": 3000, "protocol": "tcp" }],
+        "portMappings": [{ "containerPort": 3000, "protocol": "tcp", "hostPort": 3000 }],
         "essential": true,
         "logConfiguration": {
           "logDriver": "awslogs",
