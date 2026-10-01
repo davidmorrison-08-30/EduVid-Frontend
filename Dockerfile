@@ -7,8 +7,9 @@ COPY . .
 RUN npm run build --verbose
 
 # Stage 2: Runtime
-FROM node:20-alpine
-WORKDIR /app
-COPY --from=builder /app/package*.json ./
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["nginx", "-g", "daemon off;"]
