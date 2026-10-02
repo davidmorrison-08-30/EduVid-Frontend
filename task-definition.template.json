@@ -10,7 +10,7 @@
       {
         "name": "$REPO_NAME",
         "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:latest",
-        "portMappings": [{ "containerPort": 3000, "protocol": "tcp", "hostPort": 3000 }],
+        "portMappings": [{ "containerPort": 3000, "protocol": "tcp"}],
         "essential": true,
         "logConfiguration": {
           "logDriver": "awslogs",
@@ -24,7 +24,8 @@
           "command": ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"],
           "interval": 30,
           "timeout": 5,
-          "retries": 3
+          "retries": 3,
+          "startPeriod": 60
         }
       }
     ]
