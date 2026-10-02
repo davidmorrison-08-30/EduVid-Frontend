@@ -11,6 +11,16 @@
         "name": "$REPO_NAME",
         "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:latest",
         "portMappings": [{ "containerPort": 3000, "protocol": "tcp"}],
+        "environment": [
+        {
+          "name": "S3_BUCKET",
+          "value": "eduvid-storage"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "$AWS_REGION"
+        }
+      ],
         "essential": true,
         "logConfiguration": {
           "logDriver": "awslogs",
