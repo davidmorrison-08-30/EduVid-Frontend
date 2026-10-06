@@ -1,16 +1,29 @@
 import { useState } from 'react'
+import { submitConcept } from './services/api'
 import './App.css'
 
 function App() {
   const [prompt, setPrompt] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState('')
 
-  const handleSubmit = () => {
-    console.log('Prompt submitted:', prompt)
-    // TODO: Add action to perform with the prompt
+  const handleSubmit = async () => {
+    if (!prompt.trim()) return
+    setIsSubmitting(true)
+    setMessage('')
+    try {
+      const result = await submitConcept(prompt)
+      setMessage(`✓ Video generation started! Job ID: ${result.job_id}`)
+      setPrompt('')
+    } catch (err) {
+      setMessage(`✗ Error: ${(err as Error).message}`)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter'&& !isSubmitting) {
       handleSubmit()
     }
   }
@@ -35,10 +48,12 @@ function App() {
             type="button"
             className="submit-button"
             onClick={handleSubmit}
+            disabled={isSubmitting}
           >
-            Submit
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </button>
         </div>
+        {message && <p className="message">{message}</p>}
       </section>
     </>
   )
