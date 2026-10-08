@@ -21,7 +21,7 @@ const client = generateClient()
 // GraphQL Response Data Types
 interface JobStatusPayload {
   jobId: string
-  status: 'succeeded' | 'failed' | 'processing'
+  status: 'queued' | 'running' | 'succeeded' | 'failed'
   videoUrl?: string
   error?: string
 }
