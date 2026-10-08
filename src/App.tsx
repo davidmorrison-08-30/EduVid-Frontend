@@ -8,7 +8,7 @@ import './App.css'
 Amplify.configure({
   API: {
     GraphQL: {
-      endpoint: import.meta.env.APPSYNC_GRAPHQL || '',
+      endpoint: import.meta.env.VITE_APPSYNC_GRAPHQL || '',
       region: 'us-east-1',
       defaultAuthMode: 'apiKey',
       apiKey: import.meta.env.VITE_APPSYNC_API_KEY || ''
