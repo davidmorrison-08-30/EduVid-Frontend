@@ -74,7 +74,7 @@ function App() {
       setMessage(`Job submitted (ID: ${jobId}). Video generation in progress...`)
 
       // 2. Pass generic type OnJobStatusChangedData directly into client.graphql()
-      const subscriptionObservable = client.graphql<OnJobStatusChangedData>({
+      const subscriptionObservable = await client.graphql<OnJobStatusChangedData>({
         query: OnJobStatusChangedSubscription,
         variables: { jobId }
       })
