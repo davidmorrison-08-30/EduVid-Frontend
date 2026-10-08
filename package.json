@@ -11,6 +11,8 @@
     "start": "serve -s dist -l 3000"
   },
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.1147.0",
+    "aws-amplify": "^6.22.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "serve": "^14.2.0"
