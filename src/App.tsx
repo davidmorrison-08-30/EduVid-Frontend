@@ -5,15 +5,15 @@ import { submitConcept } from './services/api'
 import './App.css'
 
 // 1. Initialize Amplify with AppSync credentials
-console.log('AppSync Endpoint:', import.meta.env.VITE_APPSYNC_GRAPHQL)
+// console.log('AppSync Endpoint:', import.meta.env.VITE_APPSYNC_GRAPHQL)
 
 Amplify.configure({
   API: {
     GraphQL: {
-      endpoint: import.meta.env.VITE_APPSYNC_GRAPHQL || '',
+      endpoint: 'https://fzxr64c42fee5doqri3c76h2aq.appsync-api.us-east-1.amazonaws.com/graphql',
       region: 'us-east-1',
       defaultAuthMode: 'apiKey',
-      apiKey: import.meta.env.VITE_APPSYNC_API_KEY || ''
+      apiKey: 'da2-54wiuhtcnfbgvhdf5rqj2s7say'
     }
   }
 })
