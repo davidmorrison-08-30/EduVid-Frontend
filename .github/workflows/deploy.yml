@@ -87,6 +87,8 @@ jobs:
           VITE_APPSYNC_API_KEY: ${{ secrets.VITE_APPSYNC_API_KEY }}
 
         run: |
+          echo "VITE_APPSYNC_GRAPHQL=${{ secrets.VITE_APPSYNC_GRAPHQL }}" >> .env
+          echo "VITE_APPSYNC_API_KEY=${{ secrets.VITE_APPSYNC_API_KEY }}" >> .env
           npm ci
           npm run build
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
