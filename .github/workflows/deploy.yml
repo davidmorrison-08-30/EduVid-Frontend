@@ -9,14 +9,14 @@ permissions:
   contents: read
 
 env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-  ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-  ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
-  ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
-  ECS_TASK_DEFINITION: task-definition.json
-  CONTAINER_NAME: ${{ secrets.REPO_NAME }}
-  APPSYNC_API_KEY: ${{ secrets.APPSYNC_API_KEY }}
-  APPSYNC_GRAPHQL: ${{ secrets.APPSYNC_GRAPHQL }}
+  VITE_AWS_REGION: ${{ secrets.AWS_REGION }}
+  VITE_ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+  VITE_ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
+  VITE_ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
+  VITE_ECS_TASK_DEFINITION: task-definition.json
+  VITE_CONTAINER_NAME: ${{ secrets.REPO_NAME }}
+  VITE_APPSYNC_API_KEY: ${{ secrets.APPSYNC_API_KEY }}
+  VITE_APPSYNC_GRAPHQL: ${{ secrets.APPSYNC_GRAPHQL }}
 
 jobs:
   deploy:
