@@ -133,7 +133,7 @@ function App() {
     <>
       <section id="center">
         <div>
-          <h1>EduVid</h1>
+          <h1>EduVid by Khoi Nguyen</h1>
           <p>Enter your prompt below</p>
         </div>
         <div className="prompt-container">
