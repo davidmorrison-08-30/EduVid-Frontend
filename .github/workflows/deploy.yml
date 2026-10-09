@@ -15,8 +15,6 @@ env:
   ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: ${{ secrets.REPO_NAME }}
-  VITE_APPSYNC_API_KEY: ${{ secrets.APPSYNC_API_KEY }}
-  VITE_APPSYNC_GRAPHQL: ${{ secrets.APPSYNC_GRAPHQL }}
 
 jobs:
   deploy:
@@ -77,6 +75,8 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
+          VITE_APPSYNC_API_KEY: ${{ secrets.APPSYNC_API_KEY }}
+          VITE_APPSYNC_GRAPHQL: ${{ secrets.APPSYNC_GRAPHQL }}
 
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
