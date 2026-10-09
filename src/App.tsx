@@ -5,6 +5,7 @@ import { submitConcept } from './services/api'
 import './App.css'
 
 // 1. Initialize Amplify with AppSync credentials
+console.log('AppSync endpoint:', import.meta.env.VITE_APPSYNC_GRAPHQL)
 
 Amplify.configure({
   API: {
