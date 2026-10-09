@@ -5,8 +5,9 @@ import { submitConcept } from './services/api'
 import './App.css'
 
 // 1. Initialize Amplify with AppSync credentials
-const graphql: string = import.meta.env.VITE_APPSYNC_GRAPHQL;
-console.log('AppSync endpoint:', graphql)
+if (!import.meta.env.VITE_APPSYNC_GRAPHQL) {
+  throw new Error(`Failed to fetch appsync endpoint`);
+}
 
 Amplify.configure({
   API: {
