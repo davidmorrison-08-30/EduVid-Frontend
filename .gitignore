@@ -28,3 +28,6 @@ task-definition.json
 
 # .env
 .env
+
+# package backup files
+*.bak
