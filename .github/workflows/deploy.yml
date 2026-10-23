@@ -91,7 +91,7 @@ jobs:
           touch .env
           echo "VITE_APPSYNC_GRAPHQL=${{ secrets.VITE_APPSYNC_GRAPHQL }}" >> .env
           echo "VITE_APPSYNC_API_KEY=${{ secrets.VITE_APPSYNC_API_KEY }}" >> .env
-          echo "VITE_API_GATEWAY_URL: ${{ secrets.VITE_API_GATEWAY_URL }}" >> .env
+          echo "VITE_API_GATEWAY_URL=${{ secrets.VITE_API_GATEWAY_URL }}" >> .env
           VAR_VALUE=$(grep "^VITE_API_GATEWAY_URL=" .env | cut -d'=' -f2-)
           if [ -z "$VAR_VALUE" ]; then
             echo "❌ VITE_API_GATEWAY_URL is empty!"
