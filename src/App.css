@@ -13,6 +13,7 @@
 
 .prompt-input {
   flex: 1;
+  min-height: 120px;
   padding: 12px 16px;
   font-size: 16px;
   font-family: var(--sans);
@@ -20,7 +21,10 @@
   border-radius: 6px;
   background: var(--bg);
   color: var(--text-h);
+  text-align: left;
+  vertical-align: top;
   transition: border-color 0.3s, box-shadow 0.3s;
+  resize: none;
 
   &::placeholder {
     color: var(--text);

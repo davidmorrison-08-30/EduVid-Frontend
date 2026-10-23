@@ -111,7 +111,7 @@ function App() {
           },
           error: (err: unknown) => {
             console.error('Subscription error:', err)
-            setMessage('✗ Real-time connection lost.')
+            setMessage('An error occured. Connection lost.')
             setIsSubmitting(false)
           }
         })
@@ -125,8 +125,8 @@ function App() {
     }
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !isSubmitting) {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && e.ctrlKey && !isSubmitting) {
       handleSubmit()
     }
   }
@@ -135,26 +135,25 @@ function App() {
     <>
       <section id="center">
         <div>
-          <h1>EduVid by Khoi Nguyen</h1>
-          <p>Enter your prompt below</p>
+          <h1>Educational animation</h1>
+          <p>Enter your question below</p>
         </div>
         <div className="prompt-container">
-          <input
-            type="text"
+          <textarea
             className="prompt-input"
-            placeholder="Enter your prompt here..."
+            placeholder="Enter your question here..."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyPress}
             disabled={isSubmitting}
-          />
+          ></textarea>
           <button
             type="button"
             className="submit-button"
             onClick={handleSubmit}
             disabled={isSubmitting || !prompt.trim()}
           >
-            {isSubmitting ? 'Generating Video...' : 'Submit'}
+            {isSubmitting ? 'Generating video...' : 'Submit'}
           </button>
         </div>
 

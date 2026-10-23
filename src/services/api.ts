@@ -1,7 +1,9 @@
-import { API_GATEWAY_URL } from '../config';
+if (!import.meta.env.VITE_API_GATEWAY_URL) {
+  throw new Error(`Failed to fetch API gateway URL`);
+}
 
 export async function submitConcept(concept: string) {
-  const response = await fetch(`${API_GATEWAY_URL}/generate`, {
+  const response = await fetch(`${import.meta.env.VITE_API_GATEWAY_URL}/generate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ concept }),
@@ -15,7 +17,7 @@ export async function submitConcept(concept: string) {
 }
 
 export async function checkJobStatus(jobId: string) {
-  const response = await fetch(`${API_GATEWAY_URL}/status/${jobId}`);
+  const response = await fetch(`${import.meta.env.VITE_API_GATEWAY_URL}/status/${jobId}`);
   
   if (!response.ok) {
     throw new Error(`Failed to fetch status`);
