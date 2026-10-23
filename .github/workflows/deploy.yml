@@ -88,9 +88,17 @@ jobs:
           VITE_API_GATEWAY_URL: ${{ secrets.VITE_API_GATEWAY_URL }}
 
         run: |
+          touch .env
           echo "VITE_APPSYNC_GRAPHQL=${{ secrets.VITE_APPSYNC_GRAPHQL }}" >> .env
           echo "VITE_APPSYNC_API_KEY=${{ secrets.VITE_APPSYNC_API_KEY }}" >> .env
           echo "VITE_API_GATEWAY_URL: ${{ secrets.VITE_API_GATEWAY_URL }}" >> .env
+          VAR_VALUE=$(grep "^VITE_API_GATEWAY_URL=" .env | cut -d'=' -f2-)
+          if [ -z "$VAR_VALUE" ]; then
+            echo "❌ VITE_API_GATEWAY_URL is empty!"
+            exit 1  # Fail the step if it's empty
+          else
+            echo "✅ VITE_API_GATEWAY_URL is not empty"
+          fi
           npm ci
           npm run build
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
