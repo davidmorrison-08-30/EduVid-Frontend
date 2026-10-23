@@ -47,6 +47,7 @@ const OnJobStatusChangedSubscription = /* GraphQL */ `
 
 function App() {
   const [prompt, setPrompt] = useState('')
+  const [submittedPrompt, setSubmittedPrompt] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState('')
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
@@ -74,8 +75,9 @@ function App() {
       const result = await submitConcept(prompt)
       const jobId = result.job_id
 
+      setSubmittedPrompt(prompt.trim())
       setPrompt('')
-      setMessage(`Job submitted (ID: ${jobId}). Video generation in progress...`)
+      setMessage(`Video generation is in progress...Kindly take a coffee break for some minutes ˙✧˖°☕ ༘ ⋆｡ ˚ `)
 
       // 2. Pass generic type OnJobStatusChangedData directly into client.graphql()
       const subscriptionObservable = await client.graphql<OnJobStatusChangedData>({
@@ -158,6 +160,10 @@ function App() {
         </div>
 
         {message && <p className="message">{message}</p>}
+
+        {submittedPrompt && (
+          <p className="submitted-prompt">{submittedPrompt}</p>
+        )}
 
         {videoUrl && (
           <div className="video-container" style={{ marginTop: '20px' }}>

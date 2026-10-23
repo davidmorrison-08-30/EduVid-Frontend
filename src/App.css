@@ -1,3 +1,17 @@
+.submitted-prompt {
+  color: var(--text-h);
+  font-weight: 700;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  overflow-wrap: anywhere;
+
+  @media (max-width: 1024px) {
+    max-width: 90%;
+  }
+}
+
 .prompt-container {
   display: flex;
   gap: 12px;

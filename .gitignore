@@ -31,3 +31,6 @@ task-definition.json
 
 # package backup files
 *.bak
+
+# Tests
+tests/
