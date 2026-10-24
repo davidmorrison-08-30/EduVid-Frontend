@@ -137,8 +137,8 @@ function App() {
     <>
       <section id="center">
         <div>
-          <h1>Educational animation</h1>
-          <p>Enter your question below</p>
+          <h1>Simple science animation</h1>
+          <p>Enter your scientific question below</p>
         </div>
         <div className="prompt-container">
           <textarea
@@ -169,7 +169,6 @@ function App() {
           <div className="video-container" style={{ marginTop: '20px' }}>
             <video
               controls
-              autoPlay
               width="100%"
               style={{ borderRadius: '8px', maxHeight: '450px' }}
             >
