@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Amplify } from 'aws-amplify'
 import { generateClient } from 'aws-amplify/api'
 import { submitConcept } from './services/api'
+import { WAITING_MESSAGES, WAITING_MESSAGE_INTERVAL_MS } from './waitingMessages'
 import './App.css'
 
 // 1. Initialize Amplify with AppSync credentials
@@ -49,6 +50,8 @@ function App() {
   const [prompt, setPrompt] = useState('')
   const [submittedPrompt, setSubmittedPrompt] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [waitingIndex, setWaitingIndex] = useState(0)
   const [message, setMessage] = useState('')
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
@@ -64,10 +67,22 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!isGenerating) return
+
+    const id = setInterval(() => {
+      setWaitingIndex((index) => (index + 1) % WAITING_MESSAGES.length)
+    }, WAITING_MESSAGE_INTERVAL_MS)
+
+    return () => clearInterval(id)
+  }, [isGenerating])
+
   const handleSubmit = async () => {
     if (!prompt.trim() || isSubmitting) return
 
     setIsSubmitting(true)
+    setIsGenerating(false)
+    setWaitingIndex(0)
     setMessage('Submitting prompt...')
     setVideoUrl(null)
 
@@ -77,7 +92,9 @@ function App() {
 
       setSubmittedPrompt(prompt.trim())
       setPrompt('')
-      setMessage(`Video generation is in progress...Kindly take a coffee break for some minutes ˙✧˖°☕ ༘ ⋆｡ ˚ `)
+      setMessage('')
+      setWaitingIndex(0)
+      setIsGenerating(true)
 
       // 2. Pass generic type OnJobStatusChangedData directly into client.graphql()
       const subscriptionObservable = await client.graphql<OnJobStatusChangedData>({
@@ -95,6 +112,7 @@ function App() {
             if (payload.status === 'succeeded' && payload.videoUrl) {
               setVideoUrl(payload.videoUrl)
               setMessage('')
+              setIsGenerating(false)
               setIsSubmitting(false)
 
               if (subscriptionRef.current) {
@@ -103,6 +121,7 @@ function App() {
               }
             } else if (payload.status === 'failed') {
               setMessage(`✗ Generation failed: ${payload.error || 'Unknown error'}`)
+              setIsGenerating(false)
               setIsSubmitting(false)
 
               if (subscriptionRef.current) {
@@ -114,15 +133,21 @@ function App() {
           error: (err: unknown) => {
             console.error('Subscription error:', err)
             setMessage('An error occured. Connection lost.')
+            setIsGenerating(false)
             setIsSubmitting(false)
           }
         })
 
         subscriptionRef.current = sub
+      } else {
+        setMessage('✗ Error: Could not follow generation progress.')
+        setIsGenerating(false)
+        setIsSubmitting(false)
       }
 
     } catch (err) {
       setMessage(`✗ Error: ${(err as Error).message}`)
+      setIsGenerating(false)
       setIsSubmitting(false)
     }
   }
@@ -159,7 +184,13 @@ function App() {
           </button>
         </div>
 
-        {message && <p className="message">{message}</p>}
+        {isGenerating && (
+          <p className="message" key={waitingIndex} aria-live="polite">
+            {WAITING_MESSAGES[waitingIndex]}
+          </p>
+        )}
+
+        {!isGenerating && message && <p className="message">{message}</p>}
 
         {submittedPrompt && (
           <p className="submitted-prompt">{submittedPrompt}</p>

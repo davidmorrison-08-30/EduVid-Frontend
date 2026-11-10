@@ -1,3 +1,26 @@
+.message {
+  color: var(--text-h);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  overflow-wrap: anywhere;
+  animation: message-fade 400ms ease;
+
+  @media (max-width: 1024px) {
+    max-width: 90%;
+  }
+}
+
+@keyframes message-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .submitted-prompt {
   color: var(--text-h);
   font-weight: 700;
