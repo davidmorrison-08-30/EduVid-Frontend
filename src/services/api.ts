@@ -10,7 +10,10 @@ export async function submitConcept(concept: string) {
   });
   
   if (!response.ok) {
-    throw new Error(`Failed: ${response.statusText}`);
+    const errorData = await response.json().catch(() => null);
+    throw new Error(
+      errorData?.error || `Request failed (${response.status})`
+    );
   }
   
   return response.json();
